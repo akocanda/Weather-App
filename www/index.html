@@ -34,7 +34,7 @@
         <script type="text/javascript" src="cordova.js"></script>
         <script src = "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
         <script>
-            $(document).ready(function() {
+            $(document).ready(function() { 
              getcurrentlatlong();
             });
             var lat;
@@ -53,23 +53,25 @@
 
             function onSuccess(position) {   // enable ur gps, it takes sometime to call till now wait
              lat=position.coords.latitude;
-             longi=position.coords.longitude;
+             longi=position.coords.longitude; //Gets lat & lon
              $('#lati').text(lat);
              $('#longi').text(longi);
 
             }
-function gettingWeather(){
-        $.getJSON("http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+longi+"&APPID=780e4c08df3f6bd2c514a28c976da7f0",function(json){
-          $(".icon").html("<center><img src='http://openweathermap.org/img/w/" + json.weather[0].icon + ".png' alt='Icon depicting current weather.'></center>");
-          $(".container1").append("<center>City: <div>"+ json.name +"</div>" + "Country: <div>"+ json.sys.country +"</div>" +"Temp: <div>"+json.main.temp+"</div>" + "Lat: <div>"+json.coord.lat+"</div>" + "Lon: <div>"+json.coord.lon+"</div>"
-           + "Visibility: <div>"+json.weather[0].description+ "</div>"+ "Humidity: <div>"+json.main.humidity+ "</div></center>");
-        });
-    }
-    function gettingJSON(){
-            $.getJSON("http://api.openweathermap.org/data/2.5/forecast/daily?lat="+lat+"&lon="+longi+"&mode=json&units=metric&cnt=5&APPID=780e4c08df3f6bd2c514a28c976da7f0",function(json){
-              $(".container2").append("<div>" + JSON.stringify(json) + "</div>");
-            });
-        }
+			//Gets Weather in a easy to read manner for the user
+			function gettingWeather(){
+				$.getJSON("http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+longi+"&APPID=780e4c08df3f6bd2c514a28c976da7f0",function(json){
+				$(".icon").html("<center><img src='http://openweathermap.org/img/w/" + json.weather[0].icon + ".png' alt='Icon depicting current weather.'></center>");
+				$(".container1").append("<center>City: <div>"+ json.name +"</div>" + "Country: <div>"+ json.sys.country +"</div>" +"Temp: <div>"+json.main.temp+"</div>" + "Lat: <div>"+json.coord.lat+"</div>" + "Lon: <div>"+json.coord.lon+"</div>"
+				+ "Visibility: <div>"+json.weather[0].description+ "</div>"+ "Humidity: <div>"+json.main.humidity+ "</div></center>");
+			});
+			}
+			//Provides json for five days
+			function gettingJSON(){
+				$.getJSON("http://api.openweathermap.org/data/2.5/forecast/daily?lat="+lat+"&lon="+longi+"&mode=json&units=metric&cnt=5&APPID=780e4c08df3f6bd2c514a28c976da7f0",function(json){
+				$(".container2").append("<div>" + JSON.stringify(json) + "</div>");
+				});
+			}
             function onError(error){
              alert("Getting the error"+error.code + "\nerror mesg :" +error.message);
             }
